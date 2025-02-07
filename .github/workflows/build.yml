@@ -43,3 +43,4 @@ jobs:
         with:
           title: Update API Client
           commit-message: "feat: update api client"
+          team-reviewers: aurora-is-near/apps
