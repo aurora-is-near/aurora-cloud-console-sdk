@@ -16,19 +16,16 @@ yarn add @aurora-is-near/aurora-cloud-console-sdk
 Once the API client has been generated it can be instantiated as follows:
 
 ```js
-import { createAuroraCloudConsoleClient } from '@aurora-is-near/aurora-cloud-console-sdk';
+import { createApiClient } from '@aurora-is-near/aurora-cloud-console-sdk';
 
-const client = createAuroraCloudConsoleClient({
-  baseURL: 'http://example.api.com',
-  getAccessToken: () => 'my-access-token',
-  refreshAccessToken: () => 'my-new-access-token',
-  onError: console.error,
-});
+const client = createApiClient({ apiKey: 'MY-API-KEY' });
 ```
 
-The client object exposes functions for each API operation, as defined by the
-OpenAPI specification. Each function is called with an object containing the
-following properties:
+Where the API key is generated via the Aurora Cloud Console dashboard.
+
+The generated client object exposes functions for each API operation, as defined
+by [the OpenAPI specification](https://app.auroracloud.dev/api). Each function
+is called with an object containing the following properties:
 
 ### `params`
 
