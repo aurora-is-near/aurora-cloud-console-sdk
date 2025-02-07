@@ -1,0 +1,15 @@
+{
+  "include": ["src/*"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es5",
+    "declaration": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declarationMap": true,
+    "resolveJsonModule": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "@aurora-is-near/aurora-cloud-console-sdk",
+  "description": "A utility package to check if a NEAR address is banned.",
+  "version": "1.0.2",
+  "author": "Alex Mendes",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "devDependencies": {
+    "@aurora-is-near/eslint-config": "^1.4.1",
+    "@aurora-is-near/semantic-release-config": "^1.4.3",
+    "@commitlint/config-conventional": "^19.6.0",
+    "commitlint": "^19.6.1",
+    "eslint": "^8.57.0",
+    "husky": "^4.2.5",
+    "prettier": "^3.4.2",
+    "semantic-release": "^24.2.1",
+    "typescript": "^5.7.3"
+  },
+  "resolutions": {
+    "strip-ansi": "^6.0.1",
+    "string-width": "^4.2.0",
+    "wrap-ansi": "^7.0.0"
+  }
+}
