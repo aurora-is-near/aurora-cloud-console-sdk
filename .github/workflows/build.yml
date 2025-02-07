@@ -46,6 +46,7 @@ jobs:
           title: Update API Client
           commit-message: "feat: update api client"
           team-reviewers: aurora-is-near/apps
+          token: ${{ secrets.GH_DEPLOY_TOKEN }}
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
