@@ -13,6 +13,9 @@
     "build": "tsc",
     "generate": "yarn oac https://app.auroracloud.dev/api/docs --out ./src/generated"
   },
+  "engines": {
+    "node": ">=20.0"
+  },
   "sideEffects": false,
   "husky": {
     "hooks": {
