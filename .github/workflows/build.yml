@@ -46,12 +46,12 @@ jobs:
           title: Update API Client
           commit-message: "feat: update api client"
           team-reviewers: aurora-is-near/apps
-          token: ${{ secrets.GH_DEPLOY_TOKEN }}
+          token: ${{ secrets.GH_SEMANTIC_RELEASE_TOKEN }}
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_TOKEN }}
       - name: Approve the PR
         run: |
           gh pr checkout "$PR_URL"
@@ -63,4 +63,4 @@ jobs:
           fi
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_TOKEN }}
