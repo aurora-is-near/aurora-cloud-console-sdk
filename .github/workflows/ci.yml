@@ -13,3 +13,9 @@ jobs:
   test:
     uses: ./.github/workflows/test.yml
     secrets: inherit
+
+  dependabot:
+    uses: ./.github/workflows/dependabot-auto-merge.yml
+    needs: test
+    secrets:
+      GH_TOKEN: "${{ secrets.GH_DEPENDABOT_TOKEN || secrets.GH_DEPLOY_TOKEN }}"
