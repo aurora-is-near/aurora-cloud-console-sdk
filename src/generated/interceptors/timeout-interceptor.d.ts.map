@@ -1,0 +1,1 @@
+{"version":3,"file":"timeout-interceptor.d.ts","sourceRoot":"","sources":["../../../node_modules/@aurora-is-near/openapi-client/src/interceptors/timeout-interceptor.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,0BAA0B,EAAE,MAAM,OAAO,CAAC;AACxD,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,YAAY,CAAC;AAE1C,eAAO,MAAM,kBAAkB,YACnB,OAAO,cAAc,0BAA0B,oCAUxD,CAAC"}

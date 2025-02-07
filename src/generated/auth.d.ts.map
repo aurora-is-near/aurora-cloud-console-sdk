@@ -1,0 +1,1 @@
+{"version":3,"file":"auth.d.ts","sourceRoot":"","sources":["../../node_modules/@aurora-is-near/openapi-client/src/auth.ts"],"names":[],"mappings":"AAQA,MAAM,MAAM,WAAW,GAAG,MAAM,GAAG,IAAI,GAAG,SAAS,CAAC;AAEpD,MAAM,MAAM,sBAAsB,GAAG,MAAM,WAAW,GAAG,OAAO,CAAC,WAAW,CAAC,CAAC;AAkF9E;;GAEG;AACH,eAAO,MAAM,sBAAsB,QAC5B,MAAM,UACH,OAAO,mBACE,sBAAsB,uBAClB,sBAAsB,2BAuC5C,CAAC"}
