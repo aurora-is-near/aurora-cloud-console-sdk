@@ -36,6 +36,8 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
       - name: Install
         run: yarn install --frozen-lockfile --non-interactive
+      - name: Drop changes to .npmrc file
+        run: git checkout -- .npmrc
       - name: Generate client
         run: yarn generate
       - name: Create Pull Request
