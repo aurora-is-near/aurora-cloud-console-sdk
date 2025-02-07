@@ -2,8 +2,8 @@
 
 A client for the Aurora Cloud Console API.
 
-This client is generated automatically on a nightly schedule, based on the
-OpenAPI specs published at <https://app.auroracloud.dev/api>.
+This client is generated automatically on a schedule based on the OpenAPI specs
+published at <https://app.auroracloud.dev/api>.
 
 ## Installation
 
