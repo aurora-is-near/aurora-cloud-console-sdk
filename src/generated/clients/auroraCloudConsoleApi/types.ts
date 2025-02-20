@@ -348,13 +348,16 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            items: ({
+            items: {
                 id: number;
                 dealId: number;
-                resourceDefinition: Record<string, unknown> | null;
+                chains: number[];
+                contracts: string[];
+                exceptChains: number[];
+                exceptContracts: string[];
                 createdAt: string;
                 updatedAt: string;
-              })[];
+              }[];
           };
         };
       };
@@ -374,7 +377,10 @@ export interface operations {
     requestBody?: {
       content: {
         "application/json": {
-          resourceDefinition: Record<string, unknown> | null;
+          chains?: number[];
+          contracts?: string[];
+          exceptChains?: number[];
+          exceptContracts?: string[];
         };
       };
     };
@@ -385,7 +391,10 @@ export interface operations {
           "application/json": {
             id: number;
             dealId: number;
-            resourceDefinition: Record<string, unknown> | null;
+            chains: number[];
+            contracts: string[];
+            exceptChains: number[];
+            exceptContracts: string[];
             createdAt: string;
             updatedAt: string;
           };
@@ -408,7 +417,10 @@ export interface operations {
     requestBody?: {
       content: {
         "application/json": {
-          resourceDefinition: Record<string, unknown> | null;
+          chains: number[] | null;
+          contracts: string[] | null;
+          exceptChains: number[] | null;
+          exceptContracts: string[] | null;
         };
       };
     };
@@ -419,7 +431,10 @@ export interface operations {
           "application/json": {
             id: number;
             dealId: number;
-            resourceDefinition: Record<string, unknown> | null;
+            chains: number[];
+            contracts: string[];
+            exceptChains: number[];
+            exceptContracts: string[];
             createdAt: string;
             updatedAt: string;
           };
@@ -441,7 +456,7 @@ export interface operations {
                 id: number;
                 createdAt: string;
                 updatedAt: string;
-                chainId: string;
+                chainId: number;
                 engineAccount: string;
                 engineVersion: string;
                 genesis: string;
@@ -477,7 +492,7 @@ export interface operations {
             id: number;
             createdAt: string;
             updatedAt: string;
-            chainId: string;
+            chainId: number;
             engineAccount: string;
             engineVersion: string;
             genesis: string;
