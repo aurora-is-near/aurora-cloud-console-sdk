@@ -202,9 +202,44 @@ export interface AuroraCloudConsoleApiMethods {
     response: NonNullable<operations['createForwarderAddress']['responses']['200']>['content']['application/json'];
     data: NonNullable<operations['createForwarderAddress']['requestBody']>['content']['application/json'];
     options: {
-      params?: null;
+      params: operations['createForwarderAddress']['parameters']['path'];
       query?: null;
       data: AuroraCloudConsoleApiMethods['createForwarderAddress']['data'];
+    };
+  };
+  getForwarderTokens: {
+    response: NonNullable<operations['getForwarderTokens']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['getForwarderTokens']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
+  addForwarderTokens: {
+    response: NonNullable<operations['addForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['addForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['addForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['addForwarderTokens']['data'];
+    };
+  };
+  removeForwarderTokens: {
+    response: NonNullable<operations['removeForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['removeForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['removeForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['removeForwarderTokens']['data'];
+    };
+  };
+  updateForwarderTokens: {
+    response: NonNullable<operations['updateForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['updateForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['updateForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['updateForwarderTokens']['data'];
     };
   };
 };
@@ -240,6 +275,10 @@ export type AuroraCloudConsoleApiClient = {
   getSiloRpcRequests: (options: AuroraCloudConsoleApiMethods['getSiloRpcRequests']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloRpcRequests']['response']>;
   getForwarderAddress: (options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']>;
   createForwarderAddress: (options: AuroraCloudConsoleApiMethods['createForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']>;
+  getForwarderTokens: (options: AuroraCloudConsoleApiMethods['getForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']>;
+  addForwarderTokens: (options: AuroraCloudConsoleApiMethods['addForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']>;
+  removeForwarderTokens: (options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
+  updateForwarderTokens: (options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
 }
 
 export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraCloudConsoleApiClient => ({
@@ -454,7 +493,7 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
     options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']
   ): Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']> {
     return request({
-      endpoint: '/api/forwarder/{address}',
+      endpoint: '/api/silos/{id}/forwarder/contract/{targetAddress}',
       method: 'get',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']>;
@@ -463,9 +502,45 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
     options: AuroraCloudConsoleApiMethods['createForwarderAddress']['options']
   ): Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']> {
     return request({
-      endpoint: '/api/forwarder',
+      endpoint: '/api/silos/{id}/forwarder/contract',
       method: 'post',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']>;
+  },
+  async getForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['getForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']>;
+  },
+  async addForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['addForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'post',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']>;
+  },
+  async removeForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'delete',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
+  },
+  async updateForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'put',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
   },
 });

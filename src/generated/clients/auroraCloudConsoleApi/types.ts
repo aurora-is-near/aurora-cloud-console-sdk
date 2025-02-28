@@ -164,19 +164,41 @@ export interface paths {
      */
     get: operations["getSiloRpcRequests"];
   };
-  "/api/forwarder/{address}": {
+  "/api/silos/{id}/forwarder/contract/{targetAddress}": {
     /**
      * Get the forwarder address for given target address
      * @description **Required scopes:** `forwarder:read`
      */
     get: operations["getForwarderAddress"];
   };
-  "/api/forwarder": {
+  "/api/silos/{id}/forwarder/contract": {
     /**
      * Create a forwarder address for given target address
      * @description **Required scopes:** `forwarder:write`
      */
     post: operations["createForwarderAddress"];
+  };
+  "/api/silos/{id}/forwarder/tokens": {
+    /**
+     * Get the tokens supported by the forwarder
+     * @description **Required scopes:** `forwarder:read`
+     */
+    get: operations["getForwarderTokens"];
+    /**
+     * Update forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    put: operations["updateForwarderTokens"];
+    /**
+     * Add forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    post: operations["addForwarderTokens"];
+    /**
+     * Remove forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    delete: operations["removeForwarderTokens"];
   };
 }
 
@@ -973,7 +995,8 @@ export interface operations {
   getForwarderAddress: {
     parameters: {
       path: {
-        address: string;
+        id: number;
+        targetAddress: string;
       };
     };
     responses: {
@@ -992,11 +1015,16 @@ export interface operations {
    * @description **Required scopes:** `forwarder:write`
    */
   createForwarderAddress: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
     /** @description Body */
     requestBody?: {
       content: {
         "application/json": {
-          address: string;
+          targetAddress: string;
         };
       };
     };
@@ -1006,6 +1034,120 @@ export interface operations {
         content: {
           "application/json": {
             forwarderAddress: string | null;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Get the tokens supported by the forwarder
+   * @description **Required scopes:** `forwarder:read`
+   */
+  getForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            items: ({
+                /** @enum {string} */
+                symbol: "NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA";
+                decimals: number;
+                contractDeployed: boolean;
+                enabled: boolean;
+              })[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Update forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  updateForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Add forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  addForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Remove forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  removeForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
           };
         };
       };
