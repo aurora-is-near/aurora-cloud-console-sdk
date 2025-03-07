@@ -200,6 +200,13 @@ export interface paths {
      */
     delete: operations["removeForwarderTokens"];
   };
+  "/api/silos/{id}/healthcheck": {
+    /**
+     * Perform various checks on the silo and report the status
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["healthcheck"];
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -1148,6 +1155,35 @@ export interface operations {
         content: {
           "application/json": {
             status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Perform various checks on the silo and report the status
+   * @description **Required scopes:** `silos:read`
+   */
+  healthcheck: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            networkStatus: "ok" | "invalid-network" | "stalled";
+            defaultTokenContractsDeployed: {
+              NEAR: boolean;
+              USDt: boolean;
+              USDC: boolean;
+              AURORA: boolean;
+              ETH: boolean;
+            };
           };
         };
       };
