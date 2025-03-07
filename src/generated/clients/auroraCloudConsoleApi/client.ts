@@ -242,6 +242,14 @@ export interface AuroraCloudConsoleApiMethods {
       data: AuroraCloudConsoleApiMethods['updateForwarderTokens']['data'];
     };
   };
+  healthcheck: {
+    response: NonNullable<operations['healthcheck']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['healthcheck']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
 };
 
 export type AuroraCloudConsoleApiRequest = <T extends keyof AuroraCloudConsoleApiMethods>(
@@ -279,6 +287,7 @@ export type AuroraCloudConsoleApiClient = {
   addForwarderTokens: (options: AuroraCloudConsoleApiMethods['addForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']>;
   removeForwarderTokens: (options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
   updateForwarderTokens: (options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
+  healthcheck: (options: AuroraCloudConsoleApiMethods['healthcheck']['options']) => Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
 }
 
 export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraCloudConsoleApiClient => ({
@@ -542,5 +551,14 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
       method: 'put',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
+  },
+  async healthcheck(
+    options: AuroraCloudConsoleApiMethods['healthcheck']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/healthcheck',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
   },
 });
