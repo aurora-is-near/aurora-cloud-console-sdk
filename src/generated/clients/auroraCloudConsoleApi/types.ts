@@ -65,10 +65,17 @@ export interface paths {
   };
   "/api/silos/{id}/tokens": {
     /**
-     * Get the tokens associated with a silo
+     * Get the bridged tokens associated with a silo
      * @description **Required scopes:** `silos:read`
      */
-    get: operations["getSiloTokens"];
+    get: operations["getSiloBridgedTokens"];
+  };
+  "/api/silos/{id}/tokens/requests": {
+    /**
+     * Get the bridged tokens requested for a silo
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["getSiloBridgedTokenRequests"];
   };
   "/api/silos/{id}/tokens/bridge": {
     /**
@@ -128,6 +135,23 @@ export interface paths {
      * @description **Required scopes:** `transactions:read`
      */
     get: operations["getSiloTransactions"];
+  };
+  "/api/silos/{id}/permissions": {
+    /**
+     * Enable disable whitelists to allow make transactions or deploy contracts publicly
+     * @description **Required scopes:** `silo:write`
+     */
+    put: operations["toggleSiloPermissions"];
+    /**
+     * Add wallet address to whitelist to allow make transactions or deploy contracts
+     * @description **Required scopes:** `silo:write`
+     */
+    post: operations["addAddressToPermissionsWhitelist"];
+    /**
+     * Remove wallet address from whitelist to forbid make transactions or deploy contracts
+     * @description **Required scopes:** `silo:write`
+     */
+    delete: operations["removeAddressFromPermissionsWhitelist"];
   };
   "/api/silos/{id}/gas-collected": {
     /**
@@ -199,6 +223,13 @@ export interface paths {
      * @description **Required scopes:** `forwarder:write`
      */
     delete: operations["removeForwarderTokens"];
+  };
+  "/api/silos/{id}/healthcheck": {
+    /**
+     * Perform various checks on the silo and report the status
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["healthcheck"];
   };
 }
 
@@ -532,10 +563,10 @@ export interface operations {
     };
   };
   /**
-   * Get the tokens associated with a silo
+   * Get the bridged tokens associated with a silo
    * @description **Required scopes:** `silos:read`
    */
-  getSiloTokens: {
+  getSiloBridgedTokens: {
     parameters: {
       path: {
         id: number;
@@ -546,27 +577,45 @@ export interface operations {
       200: {
         content: {
           "application/json": {
+            total: number;
             items: ({
-                address: string;
-                createdAt: string;
                 id: number;
+                createdAt: string;
+                name: string;
                 symbol: string;
-                name: string | null;
-                decimals: number | null;
+                decimals: number;
+                aurora_address: string | null;
+                near_address: string | null;
+                ethereum_address: string | null;
                 iconUrl: string | null;
-                type: string | null;
-                /** @enum {string} */
-                deploymentStatus: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
-                bridge: ({
-                  /** @enum {string} */
-                  deploymentStatus: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
-                  isFast: boolean;
-                  addresses: {
-                      network: string;
-                      address: string;
-                    }[];
-                  origin: string | null;
-                }) | null;
+                isDeploymentPending: boolean;
+              })[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Get the bridged tokens requested for a silo
+   * @description **Required scopes:** `silos:read`
+   */
+  getSiloBridgedTokenRequests: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            total: number;
+            items: ({
+                id: number;
+                createdAt: string;
+                symbol: string;
+                address: string | null;
               })[];
           };
         };
@@ -598,8 +647,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            /** @enum {string} */
-            status: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
+            isDeploymentPending: boolean;
           };
         };
       };
@@ -847,6 +895,111 @@ export interface operations {
                     }[];
                 };
               }[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Enable disable whitelists to allow make transactions or deploy contracts publicly
+   * @description **Required scopes:** `silo:write`
+   */
+  toggleSiloPermissions: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          isEnabled: boolean;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL";
+            isEnabled: boolean;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Add wallet address to whitelist to allow make transactions or deploy contracts
+   * @description **Required scopes:** `silo:write`
+   */
+  addAddressToPermissionsWhitelist: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          address: string;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL";
+            address: string;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Remove wallet address from whitelist to forbid make transactions or deploy contracts
+   * @description **Required scopes:** `silo:write`
+   */
+  removeAddressFromPermissionsWhitelist: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          address: string;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL";
+            address: string;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
           };
         };
       };
@@ -1148,6 +1301,34 @@ export interface operations {
         content: {
           "application/json": {
             status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Perform various checks on the silo and report the status
+   * @description **Required scopes:** `silos:read`
+   */
+  healthcheck: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            networkStatus: "ok" | "invalid-network" | "stalled";
+            defaultTokenContractsDeployed: {
+              NEAR: boolean;
+              USDt: boolean;
+              USDC: boolean;
+              AURORA: boolean;
+            };
           };
         };
       };
