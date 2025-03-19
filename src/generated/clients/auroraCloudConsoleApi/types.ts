@@ -1323,12 +1323,15 @@ export interface operations {
           "application/json": {
             /** @enum {string} */
             networkStatus: "ok" | "invalid-network" | "stalled";
-            defaultTokenContractsDeployed: {
+            defaultTokensDeployed: {
               NEAR: boolean;
               USDt: boolean;
               USDC: boolean;
               AURORA: boolean;
             };
+            bridgedTokensDeployed: {
+              [key: string]: unknown;
+            } | null;
           };
         };
       };
