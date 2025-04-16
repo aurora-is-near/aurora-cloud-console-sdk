@@ -231,6 +231,13 @@ export interface paths {
      */
     get: operations["healthcheck"];
   };
+  "/api/silos/{id}/repair": {
+    /**
+     * Perform various checks and, if necessary, transactions to repair a silo
+     * @description **Required scopes:** `silos:write`
+     */
+    post: operations["repair"];
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -514,8 +521,9 @@ export interface operations {
                 engineVersion: string;
                 genesis: string;
                 name: string;
-                network: string;
                 rpcUrl: string;
+                intentsIntegrationStatus: string;
+                trisolarisIntegrationStatus: string;
                 nativeToken: {
                   symbol: string;
                   name: string | null;
@@ -550,8 +558,9 @@ export interface operations {
             engineVersion: string;
             genesis: string;
             name: string;
-            network: string;
             rpcUrl: string;
+            intentsIntegrationStatus: string;
+            trisolarisIntegrationStatus: string;
             nativeToken: {
               symbol: string;
               name: string | null;
@@ -585,6 +594,7 @@ export interface operations {
                 symbol: string;
                 decimals: number;
                 aurora_address: string | null;
+                silo_address: string | null;
                 near_address: string | null;
                 ethereum_address: string | null;
                 iconUrl: string | null;
@@ -926,7 +936,7 @@ export interface operations {
         content: {
           "application/json": {
             /** @enum {string} */
-            status: "PENDING" | "SUCCESSFUL";
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
             isEnabled: boolean;
             /** @enum {string} */
             action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
@@ -961,7 +971,7 @@ export interface operations {
         content: {
           "application/json": {
             /** @enum {string} */
-            status: "PENDING" | "SUCCESSFUL";
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
             address: string;
             /** @enum {string} */
             action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
@@ -996,7 +1006,7 @@ export interface operations {
         content: {
           "application/json": {
             /** @enum {string} */
-            status: "PENDING" | "SUCCESSFUL";
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
             address: string;
             /** @enum {string} */
             action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
@@ -1323,15 +1333,89 @@ export interface operations {
           "application/json": {
             /** @enum {string} */
             networkStatus: "ok" | "invalid-network" | "stalled";
-            defaultTokensDeployed: {
-              NEAR: boolean;
-              USDt: boolean;
-              USDC: boolean;
-              AURORA: boolean;
+            defaultTokens: {
+              NEAR: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              USDt: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              USDC: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              AURORA: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
             };
-            bridgedTokensDeployed: {
+            bridgedTokens: {
               [key: string]: unknown;
             } | null;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Perform various checks and, if necessary, transactions to repair a silo
+   * @description **Required scopes:** `silos:write`
+   */
+  repair: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": Record<string, never>;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "ok" | "skipped";
+            initialisation: ({
+              /** @enum {string} */
+              defaultTokensDeployed: "PENDING" | "SUCCESSFUL" | "FAILED";
+              /** @enum {string} */
+              baseTokenSet: "PENDING" | "SUCCESSFUL" | "FAILED";
+              isSiloActive: boolean;
+            }) | null;
+            pendingTransactions: {
+              numberOfPendingTransactions: number;
+              numberOfPendingTransactionsResolved: number;
+            } | null;
+            pendingBridgedTokens: ({
+              numberOfRequests: number;
+              numberOfRequestsResolved: number;
+              numberOfPendingDeployments: number;
+              numberOfPendingDeploymentsResolved: number;
+              tokens: ({
+                  symbol: string;
+                  /** @enum {string} */
+                  status: "PENDING" | "SUCCESSFUL" | "FAILED";
+                })[];
+            }) | null;
           };
         };
       };

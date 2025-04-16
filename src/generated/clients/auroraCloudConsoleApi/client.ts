@@ -285,6 +285,15 @@ export interface AuroraCloudConsoleApiMethods {
       data?: null;
     };
   };
+  repair: {
+    response: NonNullable<operations['repair']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['repair']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['repair']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['repair']['data'];
+    };
+  };
 };
 
 export type AuroraCloudConsoleApiRequest = <T extends keyof AuroraCloudConsoleApiMethods>(
@@ -327,6 +336,7 @@ export type AuroraCloudConsoleApiClient = {
   removeForwarderTokens: (options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
   updateForwarderTokens: (options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
   healthcheck: (options: AuroraCloudConsoleApiMethods['healthcheck']['options']) => Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
+  repair: (options: AuroraCloudConsoleApiMethods['repair']['options']) => Promise<AuroraCloudConsoleApiMethods['repair']['response']>;
 }
 
 export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraCloudConsoleApiClient => ({
@@ -635,5 +645,14 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
       method: 'get',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
+  },
+  async repair(
+    options: AuroraCloudConsoleApiMethods['repair']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['repair']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/repair',
+      method: 'post',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['repair']['response']>;
   },
 });
