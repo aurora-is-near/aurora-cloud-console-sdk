@@ -21,7 +21,7 @@ export {
 export const createAuroraCloudConsoleApiClient = (
   options: OpenApiClientOptions,
 ): AuroraCloudConsoleApiClient => {
-  const request = getRequestFunction('Aurora Cloud Console API', '1.11.0', options);
+  const request = getRequestFunction('Aurora Cloud Console API', '1.12.0', options);
 
   return getAuroraCloudConsoleApiOperations(request);
 };
