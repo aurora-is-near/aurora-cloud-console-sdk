@@ -522,8 +522,6 @@ export interface operations {
                 genesis: string;
                 name: string;
                 rpcUrl: string;
-                intentsIntegrationStatus: string;
-                trisolarisIntegrationStatus: string;
                 nativeToken: {
                   symbol: string;
                   name: string | null;
@@ -559,8 +557,6 @@ export interface operations {
             genesis: string;
             name: string;
             rpcUrl: string;
-            intentsIntegrationStatus: string;
-            trisolarisIntegrationStatus: string;
             nativeToken: {
               symbol: string;
               name: string | null;
