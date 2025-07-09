@@ -65,10 +65,17 @@ export interface paths {
   };
   "/api/silos/{id}/tokens": {
     /**
-     * Get the tokens associated with a silo
+     * Get the bridged tokens associated with a silo
      * @description **Required scopes:** `silos:read`
      */
-    get: operations["getSiloTokens"];
+    get: operations["getSiloBridgedTokens"];
+  };
+  "/api/silos/{id}/tokens/requests": {
+    /**
+     * Get the bridged tokens requested for a silo
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["getSiloBridgedTokenRequests"];
   };
   "/api/silos/{id}/tokens/bridge": {
     /**
@@ -129,6 +136,23 @@ export interface paths {
      */
     get: operations["getSiloTransactions"];
   };
+  "/api/silos/{id}/permissions": {
+    /**
+     * Enable disable whitelists to allow make transactions or deploy contracts publicly
+     * @description **Required scopes:** `silo:write`
+     */
+    put: operations["toggleSiloPermissions"];
+    /**
+     * Add wallet address to whitelist to allow make transactions or deploy contracts
+     * @description **Required scopes:** `silo:write`
+     */
+    post: operations["addAddressToPermissionsWhitelist"];
+    /**
+     * Remove wallet address from whitelist to forbid make transactions or deploy contracts
+     * @description **Required scopes:** `silo:write`
+     */
+    delete: operations["removeAddressFromPermissionsWhitelist"];
+  };
   "/api/silos/{id}/gas-collected": {
     /**
      * Get collected gas over time for a single silo
@@ -164,19 +188,55 @@ export interface paths {
      */
     get: operations["getSiloRpcRequests"];
   };
-  "/api/forwarder/{address}": {
+  "/api/silos/{id}/forwarder/contract/{targetAddress}": {
     /**
      * Get the forwarder address for given target address
      * @description **Required scopes:** `forwarder:read`
      */
     get: operations["getForwarderAddress"];
   };
-  "/api/forwarder": {
+  "/api/silos/{id}/forwarder/contract": {
     /**
      * Create a forwarder address for given target address
      * @description **Required scopes:** `forwarder:write`
      */
     post: operations["createForwarderAddress"];
+  };
+  "/api/silos/{id}/forwarder/tokens": {
+    /**
+     * Get the tokens supported by the forwarder
+     * @description **Required scopes:** `forwarder:read`
+     */
+    get: operations["getForwarderTokens"];
+    /**
+     * Update forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    put: operations["updateForwarderTokens"];
+    /**
+     * Add forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    post: operations["addForwarderTokens"];
+    /**
+     * Remove forwarder support for the given token(s)
+     * @description **Required scopes:** `forwarder:write`
+     */
+    delete: operations["removeForwarderTokens"];
+  };
+  "/api/silos/{id}/healthcheck": {
+    /**
+     * Perform various checks on the silo and report the status
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["healthcheck"];
+  };
+  "/api/silos/{id}/repair": {
+    /**
+     * Perform various checks and, if necessary, transactions to repair a silo
+     * @description **Required scopes:** `silos:write`
+     */
+    post: operations["repair"];
   };
 }
 
@@ -348,13 +408,16 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            items: ({
+            items: {
                 id: number;
                 dealId: number;
-                resourceDefinition: Record<string, unknown> | null;
+                chains: number[];
+                contracts: string[];
+                exceptChains: number[];
+                exceptContracts: string[];
                 createdAt: string;
                 updatedAt: string;
-              })[];
+              }[];
           };
         };
       };
@@ -374,7 +437,10 @@ export interface operations {
     requestBody?: {
       content: {
         "application/json": {
-          resourceDefinition: Record<string, unknown> | null;
+          chains?: number[];
+          contracts?: string[];
+          exceptChains?: number[];
+          exceptContracts?: string[];
         };
       };
     };
@@ -385,7 +451,10 @@ export interface operations {
           "application/json": {
             id: number;
             dealId: number;
-            resourceDefinition: Record<string, unknown> | null;
+            chains: number[];
+            contracts: string[];
+            exceptChains: number[];
+            exceptContracts: string[];
             createdAt: string;
             updatedAt: string;
           };
@@ -408,7 +477,10 @@ export interface operations {
     requestBody?: {
       content: {
         "application/json": {
-          resourceDefinition: Record<string, unknown> | null;
+          chains: number[] | null;
+          contracts: string[] | null;
+          exceptChains: number[] | null;
+          exceptContracts: string[] | null;
         };
       };
     };
@@ -419,7 +491,10 @@ export interface operations {
           "application/json": {
             id: number;
             dealId: number;
-            resourceDefinition: Record<string, unknown> | null;
+            chains: number[];
+            contracts: string[];
+            exceptChains: number[];
+            exceptContracts: string[];
             createdAt: string;
             updatedAt: string;
           };
@@ -441,13 +516,14 @@ export interface operations {
                 id: number;
                 createdAt: string;
                 updatedAt: string;
-                chainId: string;
+                chainId: number;
                 engineAccount: string;
                 engineVersion: string;
                 genesis: string;
                 name: string;
-                network: string;
                 rpcUrl: string;
+                intentsIntegrationStatus: string;
+                trisolarisIntegrationStatus: string;
                 nativeToken: {
                   symbol: string;
                   name: string | null;
@@ -477,13 +553,14 @@ export interface operations {
             id: number;
             createdAt: string;
             updatedAt: string;
-            chainId: string;
+            chainId: number;
             engineAccount: string;
             engineVersion: string;
             genesis: string;
             name: string;
-            network: string;
             rpcUrl: string;
+            intentsIntegrationStatus: string;
+            trisolarisIntegrationStatus: string;
             nativeToken: {
               symbol: string;
               name: string | null;
@@ -495,10 +572,10 @@ export interface operations {
     };
   };
   /**
-   * Get the tokens associated with a silo
+   * Get the bridged tokens associated with a silo
    * @description **Required scopes:** `silos:read`
    */
-  getSiloTokens: {
+  getSiloBridgedTokens: {
     parameters: {
       path: {
         id: number;
@@ -509,27 +586,46 @@ export interface operations {
       200: {
         content: {
           "application/json": {
+            total: number;
             items: ({
-                address: string;
-                createdAt: string;
                 id: number;
+                createdAt: string;
+                name: string;
                 symbol: string;
-                name: string | null;
-                decimals: number | null;
+                decimals: number;
+                aurora_address: string | null;
+                silo_address: string | null;
+                near_address: string | null;
+                ethereum_address: string | null;
                 iconUrl: string | null;
-                type: string | null;
-                /** @enum {string} */
-                deploymentStatus: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
-                bridge: ({
-                  /** @enum {string} */
-                  deploymentStatus: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
-                  isFast: boolean;
-                  addresses: {
-                      network: string;
-                      address: string;
-                    }[];
-                  origin: string | null;
-                }) | null;
+                isDeploymentPending: boolean;
+              })[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Get the bridged tokens requested for a silo
+   * @description **Required scopes:** `silos:read`
+   */
+  getSiloBridgedTokenRequests: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            total: number;
+            items: ({
+                id: number;
+                createdAt: string;
+                symbol: string;
+                address: string | null;
               })[];
           };
         };
@@ -561,8 +657,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            /** @enum {string} */
-            status: "NOT_DEPLOYED" | "PENDING" | "DEPLOYED";
+            isDeploymentPending: boolean;
           };
         };
       };
@@ -816,6 +911,111 @@ export interface operations {
     };
   };
   /**
+   * Enable disable whitelists to allow make transactions or deploy contracts publicly
+   * @description **Required scopes:** `silo:write`
+   */
+  toggleSiloPermissions: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          isEnabled: boolean;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
+            isEnabled: boolean;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Add wallet address to whitelist to allow make transactions or deploy contracts
+   * @description **Required scopes:** `silo:write`
+   */
+  addAddressToPermissionsWhitelist: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          address: string;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
+            address: string;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Remove wallet address from whitelist to forbid make transactions or deploy contracts
+   * @description **Required scopes:** `silo:write`
+   */
+  removeAddressFromPermissionsWhitelist: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          address: string;
+          /** @enum {string} */
+          action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "PENDING" | "SUCCESSFUL" | "FAILED";
+            address: string;
+            /** @enum {string} */
+            action: "MAKE_TRANSACTION" | "DEPLOY_CONTRACT";
+          };
+        };
+      };
+    };
+  };
+  /**
    * Get collected gas over time for a single silo
    * @description **Required scopes:** `transactions:read`
    */
@@ -958,7 +1158,8 @@ export interface operations {
   getForwarderAddress: {
     parameters: {
       path: {
-        address: string;
+        id: number;
+        targetAddress: string;
       };
     };
     responses: {
@@ -977,11 +1178,16 @@ export interface operations {
    * @description **Required scopes:** `forwarder:write`
    */
   createForwarderAddress: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
     /** @description Body */
     requestBody?: {
       content: {
         "application/json": {
-          address: string;
+          targetAddress: string;
         };
       };
     };
@@ -991,6 +1197,225 @@ export interface operations {
         content: {
           "application/json": {
             forwarderAddress: string | null;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Get the tokens supported by the forwarder
+   * @description **Required scopes:** `forwarder:read`
+   */
+  getForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            items: ({
+                /** @enum {string} */
+                symbol: "NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA";
+                decimals: number;
+                contractDeployed: boolean;
+                enabled: boolean;
+              })[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Update forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  updateForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Add forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  addForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Remove forwarder support for the given token(s)
+   * @description **Required scopes:** `forwarder:write`
+   */
+  removeForwarderTokens: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": {
+          tokens: ("NEAR" | "wNEAR" | "USDt" | "USDC" | "AURORA")[];
+        };
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            status: string;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Perform various checks on the silo and report the status
+   * @description **Required scopes:** `silos:read`
+   */
+  healthcheck: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            networkStatus: "ok" | "invalid-network" | "stalled";
+            defaultTokens: {
+              NEAR: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              USDt: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              USDC: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+              AURORA: {
+                isContractDeployed: boolean;
+                storageBalance: {
+                  total: string;
+                  available: string;
+                } | null;
+              };
+            };
+            bridgedTokens: {
+              [key: string]: unknown;
+            } | null;
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Perform various checks and, if necessary, transactions to repair a silo
+   * @description **Required scopes:** `silos:write`
+   */
+  repair: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    /** @description Body */
+    requestBody?: {
+      content: {
+        "application/json": Record<string, never>;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            /** @enum {string} */
+            status: "ok" | "skipped";
+            initialisation: ({
+              /** @enum {string} */
+              defaultTokensDeployed: "PENDING" | "SUCCESSFUL" | "FAILED";
+              /** @enum {string} */
+              baseTokenSet: "PENDING" | "SUCCESSFUL" | "FAILED";
+              isSiloActive: boolean;
+            }) | null;
+            pendingTransactions: {
+              numberOfPendingTransactions: number;
+              numberOfPendingTransactionsResolved: number;
+            } | null;
+            pendingBridgedTokens: ({
+              numberOfRequests: number;
+              numberOfRequestsResolved: number;
+              numberOfPendingDeployments: number;
+              numberOfPendingDeploymentsResolved: number;
+              tokens: ({
+                  symbol: string;
+                  /** @enum {string} */
+                  status: "PENDING" | "SUCCESSFUL" | "FAILED";
+                })[];
+            }) | null;
           };
         };
       };

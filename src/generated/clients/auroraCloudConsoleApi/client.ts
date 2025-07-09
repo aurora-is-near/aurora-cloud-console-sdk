@@ -75,10 +75,18 @@ export interface AuroraCloudConsoleApiMethods {
       data?: null;
     };
   };
-  getSiloTokens: {
-    response: NonNullable<operations['getSiloTokens']['responses']['200']>['content']['application/json'];
+  getSiloBridgedTokens: {
+    response: NonNullable<operations['getSiloBridgedTokens']['responses']['200']>['content']['application/json'];
     options: {
-      params: operations['getSiloTokens']['parameters']['path'];
+      params: operations['getSiloBridgedTokens']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
+  getSiloBridgedTokenRequests: {
+    response: NonNullable<operations['getSiloBridgedTokenRequests']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['getSiloBridgedTokenRequests']['parameters']['path'];
       query?: null;
       data?: null;
     };
@@ -150,6 +158,33 @@ export interface AuroraCloudConsoleApiMethods {
       data?: null;
     };
   };
+  toggleSiloPermissions: {
+    response: NonNullable<operations['toggleSiloPermissions']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['toggleSiloPermissions']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['toggleSiloPermissions']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['toggleSiloPermissions']['data'];
+    };
+  };
+  addAddressToPermissionsWhitelist: {
+    response: NonNullable<operations['addAddressToPermissionsWhitelist']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['addAddressToPermissionsWhitelist']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['addAddressToPermissionsWhitelist']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['data'];
+    };
+  };
+  removeAddressFromPermissionsWhitelist: {
+    response: NonNullable<operations['removeAddressFromPermissionsWhitelist']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['removeAddressFromPermissionsWhitelist']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['removeAddressFromPermissionsWhitelist']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['data'];
+    };
+  };
   getSiloCollectedGas: {
     response: NonNullable<operations['getSiloCollectedGas']['responses']['200']>['content']['application/json'];
     options: {
@@ -202,9 +237,61 @@ export interface AuroraCloudConsoleApiMethods {
     response: NonNullable<operations['createForwarderAddress']['responses']['200']>['content']['application/json'];
     data: NonNullable<operations['createForwarderAddress']['requestBody']>['content']['application/json'];
     options: {
-      params?: null;
+      params: operations['createForwarderAddress']['parameters']['path'];
       query?: null;
       data: AuroraCloudConsoleApiMethods['createForwarderAddress']['data'];
+    };
+  };
+  getForwarderTokens: {
+    response: NonNullable<operations['getForwarderTokens']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['getForwarderTokens']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
+  addForwarderTokens: {
+    response: NonNullable<operations['addForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['addForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['addForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['addForwarderTokens']['data'];
+    };
+  };
+  removeForwarderTokens: {
+    response: NonNullable<operations['removeForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['removeForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['removeForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['removeForwarderTokens']['data'];
+    };
+  };
+  updateForwarderTokens: {
+    response: NonNullable<operations['updateForwarderTokens']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['updateForwarderTokens']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['updateForwarderTokens']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['updateForwarderTokens']['data'];
+    };
+  };
+  healthcheck: {
+    response: NonNullable<operations['healthcheck']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['healthcheck']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
+  repair: {
+    response: NonNullable<operations['repair']['responses']['200']>['content']['application/json'];
+    data: NonNullable<operations['repair']['requestBody']>['content']['application/json'];
+    options: {
+      params: operations['repair']['parameters']['path'];
+      query?: null;
+      data: AuroraCloudConsoleApiMethods['repair']['data'];
     };
   };
 };
@@ -224,7 +311,8 @@ export type AuroraCloudConsoleApiClient = {
   updateRule: (options: AuroraCloudConsoleApiMethods['updateRule']['options']) => Promise<AuroraCloudConsoleApiMethods['updateRule']['response']>;
   getSilos: () => Promise<AuroraCloudConsoleApiMethods['getSilos']['response']>;
   getSilo: (options: AuroraCloudConsoleApiMethods['getSilo']['options']) => Promise<AuroraCloudConsoleApiMethods['getSilo']['response']>;
-  getSiloTokens: (options: AuroraCloudConsoleApiMethods['getSiloTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloTokens']['response']>;
+  getSiloBridgedTokens: (options: AuroraCloudConsoleApiMethods['getSiloBridgedTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokens']['response']>;
+  getSiloBridgedTokenRequests: (options: AuroraCloudConsoleApiMethods['getSiloBridgedTokenRequests']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokenRequests']['response']>;
   bridgeSiloToken: (options: AuroraCloudConsoleApiMethods['bridgeSiloToken']['options']) => Promise<AuroraCloudConsoleApiMethods['bridgeSiloToken']['response']>;
   getSiloOracle: (options: AuroraCloudConsoleApiMethods['getSiloOracle']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloOracle']['response']>;
   createSiloOracle: (options: AuroraCloudConsoleApiMethods['createSiloOracle']['options']) => Promise<AuroraCloudConsoleApiMethods['createSiloOracle']['response']>;
@@ -233,6 +321,9 @@ export type AuroraCloudConsoleApiClient = {
   getWallets: (options: AuroraCloudConsoleApiMethods['getWallets']['options']) => Promise<AuroraCloudConsoleApiMethods['getWallets']['response']>;
   getWallet: (options: AuroraCloudConsoleApiMethods['getWallet']['options']) => Promise<AuroraCloudConsoleApiMethods['getWallet']['response']>;
   getSiloTransactions: (options: AuroraCloudConsoleApiMethods['getSiloTransactions']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloTransactions']['response']>;
+  toggleSiloPermissions: (options: AuroraCloudConsoleApiMethods['toggleSiloPermissions']['options']) => Promise<AuroraCloudConsoleApiMethods['toggleSiloPermissions']['response']>;
+  addAddressToPermissionsWhitelist: (options: AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['options']) => Promise<AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['response']>;
+  removeAddressFromPermissionsWhitelist: (options: AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['options']) => Promise<AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['response']>;
   getSiloCollectedGas: (options: AuroraCloudConsoleApiMethods['getSiloCollectedGas']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloCollectedGas']['response']>;
   getSiloCollectedGasTotal: (options: AuroraCloudConsoleApiMethods['getSiloCollectedGasTotal']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloCollectedGasTotal']['response']>;
   getSiloFailureRate: (options: AuroraCloudConsoleApiMethods['getSiloFailureRate']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloFailureRate']['response']>;
@@ -240,6 +331,12 @@ export type AuroraCloudConsoleApiClient = {
   getSiloRpcRequests: (options: AuroraCloudConsoleApiMethods['getSiloRpcRequests']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloRpcRequests']['response']>;
   getForwarderAddress: (options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']>;
   createForwarderAddress: (options: AuroraCloudConsoleApiMethods['createForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']>;
+  getForwarderTokens: (options: AuroraCloudConsoleApiMethods['getForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']>;
+  addForwarderTokens: (options: AuroraCloudConsoleApiMethods['addForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']>;
+  removeForwarderTokens: (options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
+  updateForwarderTokens: (options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
+  healthcheck: (options: AuroraCloudConsoleApiMethods['healthcheck']['options']) => Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
+  repair: (options: AuroraCloudConsoleApiMethods['repair']['options']) => Promise<AuroraCloudConsoleApiMethods['repair']['response']>;
 }
 
 export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraCloudConsoleApiClient => ({
@@ -324,14 +421,23 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['getSilo']['response']>;
   },
-  async getSiloTokens(
-    options: AuroraCloudConsoleApiMethods['getSiloTokens']['options']
-  ): Promise<AuroraCloudConsoleApiMethods['getSiloTokens']['response']> {
+  async getSiloBridgedTokens(
+    options: AuroraCloudConsoleApiMethods['getSiloBridgedTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokens']['response']> {
     return request({
       endpoint: '/api/silos/{id}/tokens',
       method: 'get',
       secure: true,
-    }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloTokens']['response']>;
+    }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokens']['response']>;
+  },
+  async getSiloBridgedTokenRequests(
+    options: AuroraCloudConsoleApiMethods['getSiloBridgedTokenRequests']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokenRequests']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/tokens/requests',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloBridgedTokenRequests']['response']>;
   },
   async bridgeSiloToken(
     options: AuroraCloudConsoleApiMethods['bridgeSiloToken']['options']
@@ -405,6 +511,33 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloTransactions']['response']>;
   },
+  async toggleSiloPermissions(
+    options: AuroraCloudConsoleApiMethods['toggleSiloPermissions']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['toggleSiloPermissions']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/permissions',
+      method: 'put',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['toggleSiloPermissions']['response']>;
+  },
+  async addAddressToPermissionsWhitelist(
+    options: AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/permissions',
+      method: 'post',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['addAddressToPermissionsWhitelist']['response']>;
+  },
+  async removeAddressFromPermissionsWhitelist(
+    options: AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/permissions',
+      method: 'delete',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['removeAddressFromPermissionsWhitelist']['response']>;
+  },
   async getSiloCollectedGas(
     options: AuroraCloudConsoleApiMethods['getSiloCollectedGas']['options']
   ): Promise<AuroraCloudConsoleApiMethods['getSiloCollectedGas']['response']> {
@@ -454,7 +587,7 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
     options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']
   ): Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']> {
     return request({
-      endpoint: '/api/forwarder/{address}',
+      endpoint: '/api/silos/{id}/forwarder/contract/{targetAddress}',
       method: 'get',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']>;
@@ -463,9 +596,63 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
     options: AuroraCloudConsoleApiMethods['createForwarderAddress']['options']
   ): Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']> {
     return request({
-      endpoint: '/api/forwarder',
+      endpoint: '/api/silos/{id}/forwarder/contract',
       method: 'post',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']>;
+  },
+  async getForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['getForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']>;
+  },
+  async addForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['addForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'post',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['addForwarderTokens']['response']>;
+  },
+  async removeForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['removeForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'delete',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['removeForwarderTokens']['response']>;
+  },
+  async updateForwarderTokens(
+    options: AuroraCloudConsoleApiMethods['updateForwarderTokens']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/forwarder/tokens',
+      method: 'put',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['updateForwarderTokens']['response']>;
+  },
+  async healthcheck(
+    options: AuroraCloudConsoleApiMethods['healthcheck']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/healthcheck',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['healthcheck']['response']>;
+  },
+  async repair(
+    options: AuroraCloudConsoleApiMethods['repair']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['repair']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/repair',
+      method: 'post',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['repair']['response']>;
   },
 });
