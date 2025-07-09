@@ -33,7 +33,7 @@
   "devDependencies": {
     "@aurora-is-near/eslint-config": "^1.5.3",
     "@aurora-is-near/openapi-client": "^1.2.4",
-    "@aurora-is-near/semantic-release-config": "^1.5.3",
+    "@aurora-is-near/semantic-release-config": "^1.5.4",
     "@commitlint/config-conventional": "^19.6.0",
     "commitlint": "^19.6.1",
     "eslint": "^8.57.0",

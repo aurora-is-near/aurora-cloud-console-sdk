@@ -52,10 +52,10 @@
     yaml "^2.7.0"
     yargs "^17.7.2"
 
-"@aurora-is-near/semantic-release-config@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@aurora-is-near/semantic-release-config/-/semantic-release-config-1.5.3.tgz#e1276d6f91bdb18aef6907baaa2bd9ed4419e195"
-  integrity sha512-2tcsdoksguqg9Wy8q3Xnsr53UDj68o1WDwl09QY5DnVuxhmPU1mGXmFP6S88qN56FmAHiYijRev7MABHUQW/Mg==
+"@aurora-is-near/semantic-release-config@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@aurora-is-near/semantic-release-config/-/semantic-release-config-1.5.4.tgz#3743efca6a6879ea94584d9fa2c1d0919ff565c2"
+  integrity sha512-B0f14oiqYwQ0AiqL1iTX/kmwiHKRgkpPSQlkdJjxz4qXTuPFRTguVWZyq5McDTZWar2vz89t10nxOtmosUvi2Q==
   dependencies:
     "@semantic-release/commit-analyzer" "^13.0.0"
     "@semantic-release/exec" "^6.0.3"
