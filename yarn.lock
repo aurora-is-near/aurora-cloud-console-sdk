@@ -790,7 +790,29 @@
     micromatch "^4.0.0"
     p-reduce "^2.0.0"
 
-"@semantic-release/github@^11.0.0", "@semantic-release/github@^11.0.1":
+"@semantic-release/github@^10.0.0":
+  version "10.3.5"
+  resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-10.3.5.tgz#112b6ee41fe78356359aa7ba9a1e98b68c8640fc"
+  integrity sha512-svvRglGmvqvxjmDgkXhrjf0lC88oZowFhOfifTldbgX9Dzj0inEtMLaC+3/MkDEmxmaQjWmF5Q/0CMIvPNSVdQ==
+  dependencies:
+    "@octokit/core" "^6.0.0"
+    "@octokit/plugin-paginate-rest" "^11.0.0"
+    "@octokit/plugin-retry" "^7.0.0"
+    "@octokit/plugin-throttling" "^9.0.0"
+    "@semantic-release/error" "^4.0.0"
+    aggregate-error "^5.0.0"
+    debug "^4.3.4"
+    dir-glob "^3.0.1"
+    globby "^14.0.0"
+    http-proxy-agent "^7.0.0"
+    https-proxy-agent "^7.0.0"
+    issue-parser "^7.0.0"
+    lodash-es "^4.17.21"
+    mime "^4.0.0"
+    p-filter "^4.0.0"
+    url-join "^5.0.0"
+
+"@semantic-release/github@^11.0.1":
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-11.0.1.tgz#127579aa77ddd8586de6f4f57d0e66db3453a876"
   integrity sha512-Z9cr0LgU/zgucbT9cksH0/pX9zmVda9hkDPcgIE0uvjMQ8w/mElDivGjx1w1pEQ+MuQJ5CBq3VCF16S6G4VH3A==
@@ -812,6 +834,25 @@
     p-filter "^4.0.0"
     url-join "^5.0.0"
 
+"@semantic-release/npm@^12.0.0":
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/@semantic-release/npm/-/npm-12.0.2.tgz#eaee2de9e543ea86c058b204943d8916a64efb7b"
+  integrity sha512-+M9/Lb35IgnlUO6OSJ40Ie+hUsZLuph2fqXC/qrKn0fMvUU/jiCjpoL6zEm69vzcmaZJ8yNKtMBEKHWN49WBbQ==
+  dependencies:
+    "@semantic-release/error" "^4.0.0"
+    aggregate-error "^5.0.0"
+    execa "^9.0.0"
+    fs-extra "^11.0.0"
+    lodash-es "^4.17.21"
+    nerf-dart "^1.0.0"
+    normalize-url "^8.0.0"
+    npm "^10.9.3"
+    rc "^1.2.8"
+    read-pkg "^9.0.0"
+    registry-auth-token "^5.0.0"
+    semver "^7.1.2"
+    tempy "^3.0.0"
+
 "@semantic-release/npm@^12.0.1":
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/@semantic-release/npm/-/npm-12.0.1.tgz#ffb47906de95f8dade8fe0480df0a08dbe1b80c9"
@@ -825,25 +866,6 @@
     nerf-dart "^1.0.0"
     normalize-url "^8.0.0"
     npm "^10.5.0"
-    rc "^1.2.8"
-    read-pkg "^9.0.0"
-    registry-auth-token "^5.0.0"
-    semver "^7.1.2"
-    tempy "^3.0.0"
-
-"@semantic-release/npm@^12.0.2":
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/@semantic-release/npm/-/npm-12.0.2.tgz#eaee2de9e543ea86c058b204943d8916a64efb7b"
-  integrity sha512-+M9/Lb35IgnlUO6OSJ40Ie+hUsZLuph2fqXC/qrKn0fMvUU/jiCjpoL6zEm69vzcmaZJ8yNKtMBEKHWN49WBbQ==
-  dependencies:
-    "@semantic-release/error" "^4.0.0"
-    aggregate-error "^5.0.0"
-    execa "^9.0.0"
-    fs-extra "^11.0.0"
-    lodash-es "^4.17.21"
-    nerf-dart "^1.0.0"
-    normalize-url "^8.0.0"
-    npm "^10.9.3"
     rc "^1.2.8"
     read-pkg "^9.0.0"
     registry-auth-token "^5.0.0"
@@ -3501,6 +3523,14 @@ import-fresh@^3.2.1, import-fresh@^3.3.0:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
+import-from-esm@^1.3.1:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/import-from-esm/-/import-from-esm-1.3.4.tgz#39e97c84085e308fe66cf872a667046b45449df0"
+  integrity sha512-7EyUlPFC0HOlBDpUFGfYstsU7XHxZJKAAMzCT8wZ0hMW7b+hG51LIKTDcsgtz8Pu6YC0HqRVbX+rVUtsGMUKvg==
+  dependencies:
+    debug "^4.3.4"
+    import-meta-resolve "^4.0.0"
+
 import-from-esm@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-from-esm/-/import-from-esm-2.0.0.tgz#184eb9aad4f557573bd6daf967ad5911b537797a"
@@ -4421,7 +4451,7 @@ make-fetch-happen@^14.0.0, make-fetch-happen@^14.0.1, make-fetch-happen@^14.0.3:
     promise-retry "^2.0.1"
     ssri "^12.0.0"
 
-marked-terminal@^7.3.0:
+marked-terminal@^7.0.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/marked-terminal/-/marked-terminal-7.3.0.tgz#7a86236565f3dd530f465ffce9c3f8b62ef270e8"
   integrity sha512-t4rBvPsHc57uE/2nJOLmMbZCQ4tgAccAED3ngXQqW6g+TxA488JzJ+FK3lQkzBQOI1mRV/r/Kq+1ZlJ4D0owQw==
@@ -4434,10 +4464,10 @@ marked-terminal@^7.3.0:
     node-emoji "^2.2.0"
     supports-hyperlinks "^3.1.0"
 
-marked@^15.0.0:
-  version "15.0.12"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-15.0.12.tgz#30722c7346e12d0a2d0207ab9b0c4f0102d86c4e"
-  integrity sha512-8dD6FusOQSrpv9Z1rdNMdlSgQOIP880DHqnohobOmYLElGEqAL/JvxvuxZO16r4HtjTlfPRDC1hbvxC9dPN2nA==
+marked@^12.0.0:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-12.0.2.tgz#b31578fe608b599944c69807b00f18edab84647e"
+  integrity sha512-qXUm7e/YKFoqFPYPa3Ukg9xlI5cyAtGmyEIzMfW//m6kXwCy2Ps9DYf5ioijFKQ8qyuscrHoY04iJGctu2Kg0Q==
 
 math-intrinsics@^1.1.0:
   version "1.1.0"
@@ -5860,15 +5890,15 @@ semantic-release-react-native@^1.12.2:
     plist "^3.0.6"
     semver "^7.3.7"
 
-semantic-release@^24.2.6:
-  version "24.2.6"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-24.2.6.tgz#03b098597c2c8d0642c8b5272f545be6ac2c6bf5"
-  integrity sha512-D0cwjlO5RZzHHxAcsoF1HxiRLfC3ehw+ay+zntzFs6PNX6aV0JzKNG15mpxPipBYa/l4fHly88dHvgDyqwb1Ww==
+semantic-release@~24.0.0:
+  version "24.0.0"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-24.0.0.tgz#779493f1426469ce0ef60cf74e50aba6e7a0af16"
+  integrity sha512-v46CRPw+9eI3ZuYGF2oAjqPqsfbnfFTwLBgQsv/lch4goD09ytwOTESMN4QIrx/wPLxUGey60/NMx+ANQtWRsA==
   dependencies:
     "@semantic-release/commit-analyzer" "^13.0.0-beta.1"
     "@semantic-release/error" "^4.0.0"
-    "@semantic-release/github" "^11.0.0"
-    "@semantic-release/npm" "^12.0.2"
+    "@semantic-release/github" "^10.0.0"
+    "@semantic-release/npm" "^12.0.0"
     "@semantic-release/release-notes-generator" "^14.0.0-beta.1"
     aggregate-error "^5.0.0"
     cosmiconfig "^9.0.0"
@@ -5880,11 +5910,11 @@ semantic-release@^24.2.6:
     get-stream "^6.0.0"
     git-log-parser "^1.2.0"
     hook-std "^3.0.0"
-    hosted-git-info "^8.0.0"
-    import-from-esm "^2.0.0"
+    hosted-git-info "^7.0.0"
+    import-from-esm "^1.3.1"
     lodash-es "^4.17.21"
-    marked "^15.0.0"
-    marked-terminal "^7.3.0"
+    marked "^12.0.0"
+    marked-terminal "^7.0.0"
     micromatch "^4.0.2"
     p-each-series "^3.0.0"
     p-reduce "^3.0.0"
