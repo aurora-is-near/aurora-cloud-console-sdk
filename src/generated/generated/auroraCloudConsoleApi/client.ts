@@ -146,7 +146,7 @@ export interface AuroraCloudConsoleApiMethods {
     response: NonNullable<operations['getWallet']['responses']['200']>['content']['application/json'];
     options: {
       params: operations['getWallet']['parameters']['path'];
-      query?: operations['getWallet']['parameters']['query'];
+      query?: null;
       data?: null;
     };
   };
@@ -221,6 +221,14 @@ export interface AuroraCloudConsoleApiMethods {
     response: NonNullable<operations['getSiloRpcRequests']['responses']['200']>['content']['application/json'];
     options: {
       params: operations['getSiloRpcRequests']['parameters']['path'];
+      query?: null;
+      data?: null;
+    };
+  };
+  getSiloBaseToken: {
+    response: NonNullable<operations['getSiloBaseToken']['responses']['200']>['content']['application/json'];
+    options: {
+      params: operations['getSiloBaseToken']['parameters']['path'];
       query?: null;
       data?: null;
     };
@@ -329,6 +337,7 @@ export type AuroraCloudConsoleApiClient = {
   getSiloFailureRate: (options: AuroraCloudConsoleApiMethods['getSiloFailureRate']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloFailureRate']['response']>;
   getSiloLatency: (options: AuroraCloudConsoleApiMethods['getSiloLatency']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloLatency']['response']>;
   getSiloRpcRequests: (options: AuroraCloudConsoleApiMethods['getSiloRpcRequests']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloRpcRequests']['response']>;
+  getSiloBaseToken: (options: AuroraCloudConsoleApiMethods['getSiloBaseToken']['options']) => Promise<AuroraCloudConsoleApiMethods['getSiloBaseToken']['response']>;
   getForwarderAddress: (options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderAddress']['response']>;
   createForwarderAddress: (options: AuroraCloudConsoleApiMethods['createForwarderAddress']['options']) => Promise<AuroraCloudConsoleApiMethods['createForwarderAddress']['response']>;
   getForwarderTokens: (options: AuroraCloudConsoleApiMethods['getForwarderTokens']['options']) => Promise<AuroraCloudConsoleApiMethods['getForwarderTokens']['response']>;
@@ -582,6 +591,15 @@ export const getOperations = (request: AuroraCloudConsoleApiRequest): AuroraClou
       method: 'get',
       secure: true,
     }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloRpcRequests']['response']>;
+  },
+  async getSiloBaseToken(
+    options: AuroraCloudConsoleApiMethods['getSiloBaseToken']['options']
+  ): Promise<AuroraCloudConsoleApiMethods['getSiloBaseToken']['response']> {
+    return request({
+      endpoint: '/api/silos/{id}/base-token',
+      method: 'get',
+      secure: true,
+    }, options) as Promise<AuroraCloudConsoleApiMethods['getSiloBaseToken']['response']>;
   },
   async getForwarderAddress(
     options: AuroraCloudConsoleApiMethods['getForwarderAddress']['options']

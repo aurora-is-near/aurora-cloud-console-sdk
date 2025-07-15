@@ -1,7 +1,7 @@
 import { getRequestFunction } from '../create';
 import { OpenApiClientOptions } from '../options';
 
-import type { components as AuroraCloudConsoleApiTypes } from './auroraCloudConsoleApi/types';
+import { components as AuroraCloudConsoleApiTypes } from './auroraCloudConsoleApi/types';
 import {
   getOperations as getAuroraCloudConsoleApiOperations,
   AuroraCloudConsoleApiMethods,
@@ -21,7 +21,7 @@ export {
 export const createAuroraCloudConsoleApiClient = (
   options: OpenApiClientOptions,
 ): AuroraCloudConsoleApiClient => {
-  const request = getRequestFunction('Aurora Cloud Console API', '1.11.0', options);
+  const request = getRequestFunction('Aurora Cloud Console API', '1.12.1', options);
 
   return getAuroraCloudConsoleApiOperations(request);
 };

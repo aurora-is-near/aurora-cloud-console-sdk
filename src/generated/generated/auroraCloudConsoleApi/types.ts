@@ -188,6 +188,13 @@ export interface paths {
      */
     get: operations["getSiloRpcRequests"];
   };
+  "/api/silos/{id}/base-token": {
+    /**
+     * Get details of the base token for a given silo
+     * @description **Required scopes:** `silos:read`
+     */
+    get: operations["getSiloBaseToken"];
+  };
   "/api/silos/{id}/forwarder/contract/{targetAddress}": {
     /**
      * Get the forwarder address for given target address
@@ -512,7 +519,7 @@ export interface operations {
       200: {
         content: {
           "application/json": {
-            items: ({
+            items: {
                 id: number;
                 createdAt: string;
                 updatedAt: string;
@@ -522,14 +529,7 @@ export interface operations {
                 genesis: string;
                 name: string;
                 rpcUrl: string;
-                intentsIntegrationStatus: string;
-                trisolarisIntegrationStatus: string;
-                nativeToken: {
-                  symbol: string;
-                  name: string | null;
-                  decimals: number | null;
-                };
-              })[];
+              }[];
           };
         };
       };
@@ -559,13 +559,6 @@ export interface operations {
             genesis: string;
             name: string;
             rpcUrl: string;
-            intentsIntegrationStatus: string;
-            trisolarisIntegrationStatus: string;
-            nativeToken: {
-              symbol: string;
-              name: string | null;
-              decimals: number | null;
-            };
           };
         };
       };
@@ -788,7 +781,6 @@ export interface operations {
       query?: {
         limit?: number;
         offset?: number;
-        dealId?: number;
       };
       path: {
         id: string;
@@ -817,11 +809,8 @@ export interface operations {
    */
   getWallet: {
     parameters: {
-      query?: {
-        dealId?: number;
-      };
       path: {
-        id: string;
+        id: number;
         address: string;
       };
     };
@@ -1146,6 +1135,30 @@ export interface operations {
                     count: number;
                   }[];
               }[];
+          };
+        };
+      };
+    };
+  };
+  /**
+   * Get details of the base token for a given silo
+   * @description **Required scopes:** `silos:read`
+   */
+  getSiloBaseToken: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description 200 */
+      200: {
+        content: {
+          "application/json": {
+            symbol: string;
+            name: string;
+            decimals: number;
+            nearAccountId: string;
           };
         };
       };
